@@ -1,41 +1,25 @@
 var isValid = function(s) {
-    let symbols = {
-        '(' : ')',
-        '[' : ']',
-        '{' : '}'
-        
+    
+    let obj = {
+        "(" : ")",
+        "[" : "]",
+        "{" : "}"
     }
     
-    if(s.length === 0){
-        return true 
-    } else if(s[0] === '('){
-        if(s[1] === symbols['(']){
-            s = s.slice(2)
-        } else if(s[s.length - 1] === symbols['(']){
-             s = s.slice(1, -1)
-        } else{
-            return false 
-        }
-    } else if(s[0] === '['){
-        if(s[1] === symbols['[']){
-            s = s.slice(2)
-        } else if(s[s.length - 1] === symbols['[']){
-            s = s.slice(1, -1)
-        } else{
-            return false 
-        }
-    } else if(s[0] === '{'){
-        if(s[1] === symbols['{']){
-            s = s.slice(2)
-        } else if(s[s.length - 1] === symbols['{']){
-            s = s.slice(1, -1)
-        } else{
-            return false 
+    let stack = [];
+    
+    for(let paran of s){
+        if(obj.hasOwnProperty(paran)){
+            stack.push(paran)
+        } else {
+            const closeParan = stack.pop(); 
+            if(paran !== obj[closeParan]){
+                return false; 
+            }
         }
     }
     
-    return isValid(s)
-   
-    
+    return stack.length === 0; 
 
+    
 };
